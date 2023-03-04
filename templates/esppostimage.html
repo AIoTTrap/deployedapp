@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ESP32 Post Image</title>
+  </head>
+  <body>
+    <h1>Received Image</h1>
+    <form action="/esp32post" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="image" value="{{ image_data }}">
+    <!-- <img src="/esp32post" alt="Received Image"> -->
+  </body>
+</html>

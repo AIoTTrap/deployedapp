@@ -11,6 +11,10 @@ from yolov3_tf2.utils import draw_outputs
 from flask import Flask, request, Response, jsonify, send_from_directory, abort, render_template
 import os
 from werkzeug.utils import secure_filename
+from io import BytesIO
+import base64
+
+
 
 # customize your API through the following parameters
 classes_path = './data/labels/obj.names'
@@ -18,7 +22,7 @@ weights_path = './weights/yolov3.tf'
 tiny = False                    # set to True if using a Yolov3 Tiny model
 size = 416                      # size images are resized to for model
 output_path = './detections/'   # path to output folder where images with detections are saved
-num_classes = 1                # number of classes in model
+num_classes = 5                # number of classes in model
 
 # load in weights and classes
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
@@ -39,11 +43,16 @@ print('classes loaded')
 # Initialize Flask application
 app = Flask(__name__)
 
+
+@app.route('/json')
+def JSON():
+    return render_template('json.html')
+
 # API that returns JSON with classes found in images
-""" @app.route('/detections', methods=['POST'])
+@app.route('/json', methods=['POST'])
 def get_detections():
     raw_images = []
-    images = request.files.getlist("images")
+    images = request.files.getlist("file")
     image_names = []
     for image in images:
         image_name = image.filename
@@ -95,15 +104,15 @@ def get_detections():
     try:
         return jsonify({"response":response}), 200
     except FileNotFoundError:
-        abort(404) """
+        abort(404) 
 
-# API that returns image with detections on it
+#   
 #@app.route('/image', methods= ['POST'])
-@app.route('/')
+@app.route('/image')
 def home():
     return render_template('index.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/image', methods=['POST'])
 def upload_image():     
     image=request.files['file']
     if image:
@@ -143,45 +152,40 @@ def upload_image():
         except FileNotFoundError:
             abort(404)
             
-@app.route('/esp32post', methods=['POST'])
-def upload_image():     
-    # image=request.files['file']
-    image = request.files.get("image", None)
-    if image:
-        image_name=secure_filename(image.filename)
-        #image = request.files["images"]
-        #image_name = image.filename
-        image.save(os.path.join(os.getcwd(), image_name))
-        img_raw = tf.image.decode_image(
-            open(image_name, 'rb').read(), channels=3)
-        img = tf.expand_dims(img_raw, 0)
-        img = transform_images(img, size)
+@app.route('/esp32post', methods=['GET','POST'])
+def uploadimage32():     
+    image=request.files['file']
+    # image = request.files.get("image", None)
 
-        t1 = time.time()
-        boxes, scores, classes, nums = yolo(img)
-        t2 = time.time()
-        print('time: {}'.format(t2 - t1))
+    image_name=secure_filename(image.filename)
 
-        print('detections:')
-        for i in range(nums[0]):
-            print('\t{}, {}, {}'.format(class_names[int(classes[0][i])],
-                                            np.array(scores[0][i]),
-                                            np.array(boxes[0][i])))
-        img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
-        img = draw_outputs(img, (boxes, scores, classes, nums), class_names)
-        # cv2.imwrite(output_path + 'detection.jpg', img)
-        # print('output saved to: {}'.format(output_path + 'detection.jpg'))
+
+    """ # if base64 image is sent instead
+    if image is None:
+        image = BytesIO(base64.b64decode(request.form["image"]))
+    else:
+        print('image received')
+    #     image_name = get_filename(uuid)   
+    #     image.save(os.path.join(app.config["UPLOAD_FOLDER"], image_name)) 
+
+    # Check for image content
+    if not image:
+        return "Invalid image", 400 """
+
+    image.save(os.path.join(os.getcwd(), image_name))
+    response = open(image_name, 'rb').read()
+
         
-        # prepare image for response
-        _, img_encoded = cv2.imencode('.png', img)
-        response = img_encoded.tostring()
-        
-        #remove temporary image
-        os.remove(image_name)
+    #remove temporary image
+    os.remove(image_name)  
 
-        try:
-            return Response(response=response, status=200, mimetype='image/png')
-        except FileNotFoundError:
-            abort(404)
+    print('Received')
+
+    try:
+        return Response(response=response, status=200, mimetype='image/png')
+    except FileNotFoundError:
+        abort(404)
+
+
 if __name__ == '__main__':
     app.run(debug=True, host = '0.0.0.0', port=5000)
