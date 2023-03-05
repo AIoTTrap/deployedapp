@@ -108,11 +108,11 @@ def get_detections():
 
 #   
 #@app.route('/image', methods= ['POST'])
-@app.route('/image')
+@app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/image', methods=['POST'])
+@app.route('/', methods=['POST'])
 def upload_image():     
     image=request.files['file']
     if image:
