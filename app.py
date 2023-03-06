@@ -158,7 +158,7 @@ def uploadimage32():
     # image = request.files.get("image", None)
 
     #image_name=secure_filename(image.filename)
-    image_name=secure_filename(filename.filename)
+    image_name=request.form.get('esp32-cam.jpg')
 
     """ # if base64 image is sent instead
     if image is None:
