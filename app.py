@@ -160,17 +160,17 @@ def uploadimage32():
     #image_name=secure_filename(image.filename)
     image_name=request.form.get('esp32-cam.jpg')
     
-    """ # if base64 image is sent instead
+    # if base64 image is sent instead
     if image is None:
         image = BytesIO(base64.b64decode(request.form["image"]))
     else:
-        print('image received')
+        print('image not received')
     #     image_name = get_filename(uuid)   
     #     image.save(os.path.join(app.config["UPLOAD_FOLDER"], image_name)) 
 
     # Check for image content
     if not image:
-        return "Invalid image", 400 """
+        return "Invalid image", 400
 
     image.save(os.path.join(os.getcwd(), image_name))
     response = open(image_name, 'rb').read()
