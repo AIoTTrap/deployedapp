@@ -154,7 +154,7 @@ def upload_image():
             
 @app.route('/esp32post', methods=['GET','POST'])
 def uploadimage32():     
-    image=request.files['uuid']
+    image=request.form.get['image']
     # image = request.files.get("image", None)
 
     image_name=secure_filename(image.filename)
