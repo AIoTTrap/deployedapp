@@ -158,7 +158,7 @@ def uploadimage32():
     # image = request.files.get("image", None)
 
     #image_name=secure_filename(image.filename)
-    image_name=get_filename(image.filename)
+    image_name=secure_filename(image)
 
     """ # if base64 image is sent instead
     if image is None:
