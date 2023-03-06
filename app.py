@@ -157,14 +157,14 @@ def uploadimage32():
     image=request.form.get('image', None)
     # image = request.files.get("image", None)
 
-    #image_name=secure_filename(image.filename)
-    image_name=request.form.get('esp32-cam.jpg')
+    image_name=secure_filename(image.filename)
+    #image_name=request.form.get('esp32-cam.jpg')
     
     # if base64 image is sent instead
-    if image is None:
-        image = BytesIO(base64.b64decode(request.form["image"]))
-    else:
-        print('image not received')
+    #if image is None:
+    #    image = BytesIO(base64.b64decode(request.form["image"]))
+    #else:
+    #    print('image not received')
     #     image_name = get_filename(uuid)   
     #     image.save(os.path.join(app.config["UPLOAD_FOLDER"], image_name)) 
 
