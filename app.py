@@ -153,7 +153,7 @@ def upload_image():
             abort(404)
             
 @app.route('/esp32post', methods=['GET','POST'])
-def uploadimage32():     
+def uploadimage32():
     image=request.form.get('image', None)
     # image = request.files.get("image", None)
 
