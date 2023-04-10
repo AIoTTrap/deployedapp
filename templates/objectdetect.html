@@ -1,0 +1,67 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+  </style>
+  <title>TEACHABLE MACHINE (OBJECT DETECTION)</title>
+</head>
+
+<h1 style="text-align: center;"> TEACHABLE MACHINE (OBJECT DETECTION) </h1>
+
+<p> <a href="http://localhost:5000/">Home |</a> 
+  <a href="http://localhost:5000/pest_detect_home">Pest Detection |</a> 
+  <a href="http://localhost:5000/teach_mach">Teachable Machine</a> </p>
+
+<body>
+    <br>
+    This feature allows you to train your custom tensorflow model for object detection. 
+    <br>
+    The image directory should have the following structure:  <br>
+    <p style="font-size: small;">
+   <br> |-folder_name
+   <br> | &emsp; |
+   <br> | &emsp; |- train
+   <br> | &emsp; | &emsp;   |
+   <br> | &emsp; | &emsp;   |- image_name1.jpg
+   <br> | &emsp; | &emsp;   |- image_name1.xml
+   <br> | &emsp; | &emsp;   |- image_name2.jpg
+   <br> | &emsp; | &emsp;   |- image_name2.xml
+   <br> | &emsp; | &emsp;   |_ ...
+   <br> | &emsp; |      
+   <br> | &emsp; |- valid
+   <br> | &emsp; | &emsp;   |
+   <br> | &emsp; | &emsp;   |- image_name1.jpg
+   <br> | &emsp; | &emsp;   |- image_name1.xml
+   <br> | &emsp; | &emsp;   |- image_name2.jpg
+   <br> | &emsp; | &emsp;   |- image_name2.xml
+   <br> | &emsp; | &emsp;   |_ ...
+    </p>
+    <br>
+    The Annotations must be in Pascal VOC XML format. You may use <a href="https://roboflow.com/formats/pascal-voc-xml">Roboflow</a>  to convert any annotation type. <br>
+
+    Create a .txt file that contains the names of all the classes you want to detect, with each class name on a separate line.
+
+    <br><br>
+    <p>    Upload files here:</p>
+
+    <form method="post" action="/objdet" enctype="multipart/form-data">
+        <label for="train_images">Images and annotations .zip file</label>
+        <input type="file" id="train_images" name="train_images" class="form-control" autocomplete="off" required> <br>
+        <label for="class_names">.txt class file</label>
+        <input type="file" id="class_names" name="class_names" class="form-control" autocomplete="off" required>
+        <input type="submit" value="Submit" class="btn btn-info">
+    </form>
+
+    <p style="font-style: italic;">
+    Note: Once the zip file is submitted, the training will begin. This might take a while. <br>
+    Training will be completed once you receive the model file in your downloads.
+    </p>
+
+    <a href="http://localhost:5000/objdet_test">Test your model here</a> 
+</body>

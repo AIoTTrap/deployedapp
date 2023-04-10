@@ -1,0 +1,68 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+  </style>
+  <title>TEACHABLE MACHINE</title>
+</head>
+
+<h1 style="text-align: center;"> TEACHABLE MACHINE </h1>
+
+<p> <a href="http://localhost:5000/">Home |</a> 
+  <a href="http://localhost:5000/pest_detect_home">Pest Detection |</a> 
+  <a href="http://localhost:5000/teach_mach">Teachable Machine</a> </p>
+
+<body>
+    
+    <br>The Teachable Machine feature allows users to train their own image classification model and customize their pest detection 
+    system to their specific needs. This feature is particularly useful for farmers and agriculture researchers who need to 
+    identify unique pests or specific stages of pest development. It may also be used for any other classes apart from 'Pests'.<br><br>
+
+    <p style= "font-style:italic">
+    Note: To train a custom model for object detection with bounding boxes, use this <a href="http://localhost:5000/objdet">link.</a></p> <br>
+    
+
+    To continue using the Teachable Machine image classification feature, please follow these instructions: <br><br>
+    
+    1. Prepare your own photos of pests in a zip folder. The directory structure should look like this: <br>
+    folder_name/      <br>
+    |— class_1_name/   <br>
+    |&emsp;&emsp;   |— ....     <br>
+    |                 <br>
+    |— class_2_name/   <br>
+    |&emsp;&emsp;   |— ....     <br>
+    |                 <br><br>
+
+    <br> <p style= "font-style:italic">Note: This feature currently trains images for 10 epochs. </p>
+
+    2. Upload the zip folder here: <br>
+
+    <div class="container">
+        <div class="row">
+            <form method="post" action="/teach_mach" enctype="multipart/form-data">
+                <input type="file" name="train_images" class="form-control" autocomplete="off" required>
+                <input type="submit" value="Submit" class="btn btn-info">
+            </form>
+        </div>
+    </div>
+
+      <p style="font-style: italic">Note: Once the zip file is submitted, the training will begin. This might take a while. <br> 
+        Training will be completed once you receive the model file in your downloads. </p>
+
+
+    {% for message in get_flashed_messages() %}
+      {{ message }}
+    {% endfor %}
+
+         
+    <br>
+    <a href="http://localhost:5000/TM_test">Test model here</a>
+</body>
+
+</html> 

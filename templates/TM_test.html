@@ -1,0 +1,61 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 20px;
+        }
+    </style>
+        <title>TEACHABLE MACHINE</title>
+        <h1 style="text-align: center;"> TEACHABLE MACHINE </h1>
+
+    <p> <a href="http://localhost:5000/">Home |</a> 
+        <a href="http://localhost:5000/pest_detect_home">Pest Detection |</a> 
+        <a href="http://localhost:5000/teach_mach">Teachable Machine</a> </p>
+
+</head>
+
+
+
+<body>
+    
+    <br>
+    <p>    Upload the Tensorflow model file and the test image   </p>
+
+    <form method="post" action="/TM_test" enctype="multipart/form-data">
+        <label for="model_file">Model File</label>
+        <input type="file" id="model_file" name="model_file" class="form-control" autocomplete="off" required>
+        <label for="test_image">Test Image</label>
+        <input type="file" name="test_image" class="form-control" autocomplete="off" required>
+        <input type="submit" value="Submit" class="btn btn-info">
+    </form>
+
+
+    <!-- <p>    To test an image for the trained model, upload a jpeg or jpg file!    </p>
+    <div class="container">
+        <div class="row">
+            <form method="post" action="/TM_test" enctype="multipart/form-data">
+                <input type="file" name="test_image" class="form-control" autocomplete="off" required>
+                <input type="submit" value="Submit" class="btn btn-info">
+            </form>
+        </div>
+    </div> -->
+    {% if filename %}
+        <div>
+            <img src="{{ url_for('display_test', filename=filename) }}" height="300" width="500">
+        </div>
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+</body>
+
+</html> 

@@ -1,0 +1,47 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+  body {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 20px;
+  }
+</style>
+<title>Pest Detection</title>
+</head>
+
+<h1 style="text-align: center;"> Pest Detection </h1>
+
+<p> <a href="http://localhost:5000/">Home |</a> 
+  <a href="http://localhost:5000/pest_detect_home">Pest Detection |</a> 
+  <a href="http://localhost:5000/teach_mach">Teachable Machine</a> </p>
+
+<body>
+  <br>
+    <p>Upload an image:</p>
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </p>
+    {% if filename %}
+        <div>
+            <img src="{{ url_for('display_image', filename=filename) }}" height="300" width="500">
+        </div>
+    {% endif %}
+
+    <form method="post" action="/image" enctype="multipart/form-data">
+        <input type="file" name="img_file" class="form-control" autocomplete="off" required>
+        <input type="submit" value="Submit" class="btn btn-info">
+    </form>
+        
+</body>
+
+</html> 
