@@ -42,11 +42,11 @@ import json
 
 
 # customize your API through the following parameters
-classes_path = 'C:/Repos/Object-Detection-API/data/labels/obj.names'
-weights_path = 'C:/Repos/Object-Detection-API/weights/yolov3.tf'
+classes_path = 'data/labels/obj.names'
+weights_path = 'weights/yolov3.tf'
 tiny = False                    # set to True if using a Yolov3 Tiny model
 size = 416                      # size images are resized to for model
-output_path = 'C:/Repos/Object-Detection-API/detections/'   # path to output folder where images with detections are saved
+output_path = 'detections/'   # path to output folder where images with detections are saved
 num_classes = 5                # number of classes in model 
 
 # load in weights and classes
@@ -68,8 +68,7 @@ print('classes loaded')
 
 
 # Define constants for training app
-UPLOAD_FOLDER='C:/Repos/Object-Detection-API/static/uploads/'
-# UPLOAD_FOLDER = 'C:/Users/manan/Downloads/uploads/' 
+UPLOAD_FOLDER='static/uploads/'
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 img_height=180
 img_width =180
@@ -104,7 +103,6 @@ def upload_image():
     # image=request.files["file"].read()
     image=request.files['img_file']
     if image:
-        print('Youre in')
         # data=[]
         # json_responses=[]
         image_name=secure_filename(image.filename)
@@ -127,18 +125,10 @@ def upload_image():
             print('\t{}, {}, {}'.format(class_names[int(classes[0][i])],
                                             np.array(scores[0][i]),
                                             np.array(boxes[0][i])))
-            # json_responses.append({
-            #     "class": class_names[int(classes[0][i])],
-            #     "confidence": float("{0:.2f}".format(np.array(scores[0][i])*100))
-            # })
-        # data.append({
-        #     "detections": json_responses
-        # })
+         
         img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
         img = draw_outputs(img, (boxes, scores, classes, nums), class_names)
-        # cv2.imwrite(output_path + 'detection.jpg', img)
-        # print('output saved to: {}'.format(output_path + 'detection.jpg'))
-        # img_name=secure_filename(img.filename)
+
         
 
         # prepare image for response
@@ -147,23 +137,13 @@ def upload_image():
         img=Image.open(io.BytesIO(response))
         #response = img_encoded.tostring()
         img.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
-        #remove temporary image
-        #os.remove(image_name)
-
-        # send_file(image_name, mimetype='image')
-        # return('Image uploaded')
-        # json_response=jsonify(data)
-        # flash(json_response)
+  
         flash('Image successfully uploaded and displayed below')
         return render_template('image.html', filename=image_name)
-        # try:
-        #     return Response(response=response, status=200, mimetype='image/png')
-        # except FileNotFoundError:
-        #     abort(404)
+        
 
 @app.route('/display/<filename>')
 def display_image(filename):
-    #print('display_image filename: ' + filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 
@@ -302,8 +282,8 @@ def train():
             zip_ref.close()
     print('Zip received')    
     
-    file_stem=pathlib.Path('C:/Repos/Object-Detection-API/static/uploads/'+filename).stem
-    data_dir = pathlib.Path('C:/Repos/Object-Detection-API/static/uploads/'+file_stem)
+    file_stem=pathlib.Path('static/uploads/'+filename).stem
+    data_dir = pathlib.Path('static/uploads/'+file_stem)
     print(data_dir)
     image_count = len(list(data_dir.glob('*/*.jpg')))
     print(image_count)
@@ -398,9 +378,9 @@ def train():
 
     flash('Training complete')
 
-    model.save('C:/Users/manan/trained_weights.h5')
+    model.save('static/trained_weights.h5')
 
-    weights_path = 'C:/Users/manan/trained_weights.h5'
+    weights_path = 'static/trained_weights.h5'
 
 
     # send_file(weights_path, as_attachment=True)
@@ -424,7 +404,7 @@ def test():
     model=load_model(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     # model=load_model('C:/Users/manan/trained_weights.h5')
 
-    class_names = np.loadtxt('C:/Users/manan/class.txt', delimiter=',', dtype=str, comments=None)
+    class_names = np.loadtxt('static/class.txt', delimiter=',', dtype=str, comments=None)
 
     # Print the class names
     print(class_names)
@@ -516,26 +496,8 @@ def bound_box():
 
     np.savetxt('class.txt', class_names, delimiter=',', newline='\n', fmt='%s')
 
-    # class_names = np.loadtxt('C:/Users/manan/class.txt', delimiter=',', dtype=str, comments=None)
-
-    # data_dir = pathlib.Path('C:/Repos/Object-Detection-API/static/uploads/'+filename)
-
 
     spec = model_spec.get('efficientdet_lite0')
-
-    # train_data, validation_data, test_data = object_detector.DataLoader.from_csv('C:/Users/manan/Downloads/IoT.v1i.tensorflow/train/_annotations.csv') # Change this
-
-    # train_data = object_detector.DataLoader.from_pascal_voc(
-    #     'C:/Users/manan/Downloads/IoT.v1i.voc/train',
-    #     'C:/Users/manan/Downloads/IoT.v1i.voc/train',
-    #     ['Insect']
-    # )
-
-    # val_data = object_detector.DataLoader.from_pascal_voc(
-    #     'C:/Users/manan/Downloads/IoT.v1i.voc/valid',
-    #     'C:/Users/manan/Downloads/IoT.v1i.voc/valid',
-    #     ['Insect']
-    # )
 
     train_dir=os.path.join(UPLOAD_FOLDER, 'train')
     valid_dir=os.path.join(UPLOAD_FOLDER, 'valid')
@@ -557,11 +519,11 @@ def bound_box():
 
     model.evaluate(val_data)
 
-    model.export(export_dir='C:/Repos/Object-Detection-API/static/')
+    model.export(export_dir='static/')
 
-    model.evaluate_tflite('C:/Repos/Object-Detection-API/static/model.tflite', val_data)
+    model.evaluate_tflite('static/model.tflite', val_data)
 
-    model_path='C:/Repos/Object-Detection-API/static/model.tflite'
+    model_path='static/model.tflite'
 
     return send_file(model_path, as_attachment=True)
 
@@ -879,13 +841,8 @@ def boundbox_test():
     img= load_img(os.path.join(app.config['UPLOAD_FOLDER'],image_name))
 
 
-    # img = "C:/Users/manan/Downloads/IoT.v1i.voc/valid/00b6782d3137dfb0_jpg.rf.44bd9c97a9a68ef906f2d76346c2a3bf.jpg" #@param {type:"string"}
     DETECTION_THRESHOLD = 0.5 #@param {type:"number"}
-    # Model_path="C:/Repos/Object-Detection-API/static/model.tflite" #Let user upload it
-
-    # TFLITE_MODEL_PATH = "C:/Repos/Object-Detection-API/static/model.tflite" #@param {type:"string"}
-
-    # TEMP_FILE = '/content/temp/00b6782d3137dfb0_jpg.rf.44bd9c97a9a68ef906f2d76346c2a3bf.jpg'
+  
 
     # !wget -q -O $TEMP_FILE $INPUT_IMAGE_URL
     # image = Image.open(img).convert('RGB')
@@ -911,11 +868,8 @@ def boundbox_test():
 
     RGB_img = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
 
-    cv2.imwrite('C:/Repos/Object-Detection-API/static/uploads/out.jpg',RGB_img)
-    # image_name=RGB_img.filename
-    # image_np.save('C:/Repos/Object-Detection-API/static/')
-    # cv2.imshow('image',RGB_img)
-    # cv2.waitKey(0)
+    cv2.imwrite('static/uploads/out.jpg',RGB_img)
+   
     flash('Test Complete')
     return render_template('objdettest.html', filename='out.jpg')
 
