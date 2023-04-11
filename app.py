@@ -22,7 +22,7 @@ from keras.models import Sequential, load_model
 from keras_preprocessing.image import load_img, img_to_array
 from PIL import Image
 import time
-
+import shutil
 
 from tflite_model_maker import model_spec
 from tflite_model_maker import object_detector
@@ -833,7 +833,7 @@ def boundbox_test():
             os.remove(item_path)  # Delete the file
 
         elif os.path.isdir(item_path):  # Check if the item is a folder
-            os.rmdir(item_path)  # Delete the folder
+            shutil.rmtree(item_path)  # Delete the folder
     
     model_upload=request.files["model_file"]
     filename = model_upload.filename
