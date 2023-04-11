@@ -315,7 +315,7 @@ def train():
     flash(array)
     
         # class_names_array = np.array(i, ndmin=2)
-    np.savetxt('class.txt', array, delimiter=',', newline='\n', fmt='%s')
+    np.savetxt('static/class.txt', array, delimiter=',', newline='\n', fmt='%s')
 
     print('class names printed')
 
