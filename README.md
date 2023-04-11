@@ -20,10 +20,7 @@ The documentation directory contains detailed documentation for each module and 
 The examples directory includes sample images and data to demonstrate how each of the three features works.
 
 ## License
-PestDetective is licensed under the MIT License.
-
-## Contributing
-We welcome contributions from the community! Please refer to the contributing guide for more information on how to contribute to PestDetective.
+...
 
 ## Credits
 PestDetective was created by [Your Name] and [Collaborator Name] as part of [Project Name]. We would like to acknowledge the following resources:
@@ -32,5 +29,3 @@ PestDetective was created by [Your Name] and [Collaborator Name] as part of [Pro
 - TensorFlow/Keras: [link to source]
 - ESP32 firmware: [link to source]
 
-## Contact
-If you have any questions or feedback, please contact us at [your email address]. We would love to hear from you!
