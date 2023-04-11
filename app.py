@@ -826,9 +826,14 @@ def boundbox_test():
 
         return image
     
-    for file_name in os.listdir(UPLOAD_FOLDER):  # Iterate over all the files in the directory
-        file_path = os.path.join(UPLOAD_FOLDER, file_name)  # Get the full path of the file
-        os.remove(file_path) #remove 
+    for item_name in os.listdir(UPLOAD_FOLDER):  # Iterate over all the items in the directory
+        item_path = os.path.join(UPLOAD_FOLDER, item_name)  # Get the full path of the item
+
+        if os.path.isfile(item_path):  # Check if the item is a file
+            os.remove(item_path)  # Delete the file
+
+        elif os.path.isdir(item_path):  # Check if the item is a folder
+            os.rmdir(item_path)  # Delete the folder
     
     model_upload=request.files["model_file"]
     filename = model_upload.filename
