@@ -315,7 +315,7 @@ def train():
     flash(array)
     
         # class_names_array = np.array(i, ndmin=2)
-    np.savetxt('static/class.txt', array, delimiter=',', newline='\n', fmt='%s')
+    np.savetxt('static/tm_class.txt', array, delimiter=',', newline='\n', fmt='%s')
 
     print('class names printed')
 
@@ -404,7 +404,7 @@ def test():
     model=load_model(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     # model=load_model('C:/Users/manan/trained_weights.h5')
 
-    class_names = np.loadtxt('static/class.txt', delimiter=',', dtype=str, comments=None)
+    class_names = np.loadtxt('static/tm_class.txt', delimiter=',', dtype=str, comments=None)
 
     # Print the class names
     print(class_names)
@@ -494,7 +494,7 @@ def bound_box():
         contents = class_upload.read().decode('utf-8')
         class_names = contents.splitlines()
 
-    np.savetxt('class.txt', class_names, delimiter=',', newline='\n', fmt='%s')
+    np.savetxt('static/class.txt', class_names, delimiter=',', newline='\n', fmt='%s')
 
 
     spec = model_spec.get('efficientdet_lite0')
