@@ -825,7 +825,11 @@ def boundbox_test():
                         _FONT_SIZE, _TEXT_COLOR, _FONT_THICKNESS)
 
         return image
-
+    
+    for file_name in os.listdir(UPLOAD_FOLDER):  # Iterate over all the files in the directory
+        file_path = os.path.join(UPLOAD_FOLDER, file_name)  # Get the full path of the file
+        os.remove(file_path) #remove 
+    
     model_upload=request.files["model_file"]
     filename = model_upload.filename
     model_upload.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
