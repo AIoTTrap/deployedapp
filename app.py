@@ -867,11 +867,12 @@ def boundbox_test():
     Image.fromarray(image_np)
 
     RGB_img = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-    RGB_img.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+    #RGB_img.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
     #print(os.getcwd)
-    # os.remove('static/uploads/out.jpg')
-    # cv2.imwrite('static/uploads/out.jpg',RGB_img)
-    #cv2.imwrite(UPLOADS_FOLDER + filename)
+    out_path=[]
+    out_path='UPLOAD_FOLDER + image_name' 
+    #cv2.imwrite('static/uploads/',RGB_img)
+    cv2.imwrite(out_path, RGB_img)
     flash('Test Complete')
     return render_template('objdettest.html', filename=image_name)
 
