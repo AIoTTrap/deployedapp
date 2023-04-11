@@ -108,8 +108,8 @@ def upload_image():
         image_name=secure_filename(image.filename)
         #image = request.files["images"]
         #image_name = image.filename
-        image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
-        #image.save(os.path.join(os.getcwd(), image_name))
+        #image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+        image.save(os.path.join(os.getcwd(), image_name))
         img_raw = tf.image.decode_image(
             open(image_name, 'rb').read(), channels=3)
         img = tf.expand_dims(img_raw, 0)
