@@ -867,7 +867,8 @@ def boundbox_test():
     Image.fromarray(image_np)
 
     RGB_img = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-
+    
+    os.remove('static/uploads/out.jpg')
     cv2.imwrite('static/uploads/out.jpg',RGB_img)
    
     flash('Test Complete')
