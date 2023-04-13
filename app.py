@@ -97,18 +97,11 @@ def image():
 
 @app.route('/image', methods=['POST'])
 def upload_image(): 
-    #if(request.method == "POST"):
-        # print(request.files["esp32-cam"].read())
-    # image=request.form.get('file')
-    # image=request.files["file"].read()
+   
     image=request.files['img_file']
     if image:
-        # data=[]
-        # json_responses=[]
         image_name=secure_filename(image.filename)
-        #image = request.files["images"]
-        #image_name = image.filename
-        #image.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+       
         image.save(os.path.join(os.getcwd(), image_name))
         img_raw = tf.image.decode_image(
             open(image_name, 'rb').read(), channels=3)
@@ -239,8 +232,6 @@ def uploadimage32():
                                             np.array(boxes[0][i])))
         img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
         img = draw_outputs(img, (boxes, scores, classes, nums), class_names)
-        #cv2.imwrite(output_path + 'detection.jpg', img)
-        # print('output saved to: {}'.format(output_path + 'detection.jpg'))
         
         # prepare image for response
         _, img_encoded = cv2.imencode('.jpg', img)
@@ -283,7 +274,6 @@ def train():
     print(data_dir)
     image_count = len(list(data_dir.glob('*/*.jpg')))
     print(image_count)
-    print('image count complete')
     flash('IMAGE COUNT COMPLETE')
     # flash('INITIALIZING TRAINING')
     # flash('Note: This may take a while! Please wait')
@@ -381,7 +371,7 @@ def train():
 
     # send_file(weights_path, as_attachment=True)
     return send_file(weights_path, as_attachment=True)
-    # return render_template('teach_mach.html')
+  
    
 
 
@@ -450,27 +440,6 @@ def bound_box():
     uploaded_files = request.files.getlist('train_images')
 
     class_upload=request.files.get('class_names') # should be a txt file
-
-       
-    # for train_file in train_upload:
-    #     train_filename=train_file.filename
-    #     if train_filename != '':
-    #         train_file.save(os.path.join(app.config['UPLOAD_FOLDER'], train_filename))
-    
-    # zip_train = zipfile.ZipFile(os.path.join(UPLOAD_FOLDER, train_filename), 'r')
-    # zip_train.extractall(UPLOAD_FOLDER)
-    # zip_train.close()
-    # print('Train images received')
-
-    # for valid_file in valid_upload:
-    #     valid_filename=valid_file.filename
-    #     if valid_filename != '':
-    #         valid_file.save(os.path.join(app.config['UPLOAD_FOLDER'], valid_filename))
-    
-    # zip_valid = zipfile.ZipFile(os.path.join(UPLOAD_FOLDER, valid_filename), 'r')
-    # zip_valid.extractall(UPLOAD_FOLDER)
-    # zip_valid.close()
-    # print('Validation images received')
 
     
     for file in uploaded_files:

@@ -3,14 +3,12 @@
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 #include "esp_camera.h"
-const char* ssid = "SETUP-8AC4";
-const char* password = "folded1667clear";
+const char* ssid = "";
+const char* password = "";
 
-//http://192.186.86.5:8787/Home/UploadFile
-String serverName = "44.225.155.76";
-//String serverName = "192.168.0.164";
-String serverPath = "/esp32post  ";
-const int serverPort = 5000;
+String serverName = "";
+String serverPath = "/";
+const int serverPort = ;
 WiFiClient client;
 
 // CAMERA_MODEL_AI_THINKER
