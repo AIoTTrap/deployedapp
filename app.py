@@ -274,7 +274,7 @@ def train():
     print(data_dir)
     image_count = len(list(data_dir.glob('*/*.jpg')))
     print(image_count)
-    flash('IMAGE COUNT COMPLETE')
+    #flash('IMAGE COUNT COMPLETE')
     # flash('INITIALIZING TRAINING')
     # flash('Note: This may take a while! Please wait')
 
@@ -298,7 +298,7 @@ def train():
     print(class_names)
     array=[]
     array=class_names
-    flash(array)
+    #flash(array)
     
         # class_names_array = np.array(i, ndmin=2)
     np.savetxt('static/tm_class.txt', array, delimiter=',', newline='\n', fmt='%s')
@@ -362,7 +362,7 @@ def train():
     epochs=epochs
     )
 
-    flash('Training complete')
+    #flash('Training complete')
 
     model.save('static/trained_weights.h5')
 
