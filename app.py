@@ -212,9 +212,9 @@ def get_detections():
 
          
 
-# @app.route('/esp32post')
-# def home_new():
-#     return render_template('esppostimage.html')
+@app.route('/esp32post')
+def home_new():
+    return render_template('esppostimage.html')
 
 @app.route('/esp32post', methods=['GET','POST'])
 def uploadimage32():                 
