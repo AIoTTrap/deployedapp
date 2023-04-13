@@ -22,23 +22,64 @@ $ pip install tflite-model-maker
 There seems to be a bug right now where tflite-model-maker is not aware of its own requirements (or something funky with pip is happening) and it is trying to resolve them algorithmically instead of just reading the requirements file.
 
 ## Usage
-To use PestDetective, you can follow the detailed usage instructions in the usage guide. This guide provides step-by-step instructions on how to use each of the three features.
+### Microcontroller used: <br /> LILYGO® TTGO T-Camera ESP32 WROVER & PSRAM (OV2640 Camera Module) <br />
 
-## Documentation
-The documentation directory contains detailed documentation for each module and function in the code. This documentation includes descriptions of what each function does, the parameters it takes, and the return values.
+### Pin Configuration for TTGO ESP32:
+#define PWDN_GPIO_NUM       -1 <br />
+#define RESET_GPIO_NUM      -1 <br />
+#define XCLK_GPIO_NUM       4 <br />
+#define SIOD_GPIO_NUM       18 <br />
+#define SIOC_GPIO_NUM       23 <br />
+#define Y9_GPIO_NUM         36 <br />
+#define Y8_GPIO_NUM         37 <br />
+#define Y7_GPIO_NUM         38 <br />
+#define Y6_GPIO_NUM         39 <br />
+#define Y5_GPIO_NUM         35 <br />
+#define Y4_GPIO_NUM         14 <br />
+#define Y3_GPIO_NUM         13 <br />
+#define Y2_GPIO_NUM         34 <br />
+#define VSYNC_GPIO_NUM      5 <br />
+#define HREF_GPIO_NUM       27 <br />
+#define PCLK_GPIO_NUM       25 <br />
 
-## Examples
-The examples directory includes sample images and data to demonstrate how each of the three features works.
+(Note: The PIR sensor has a deep sleep issue)
 
-## License
-...
+
+### Executing the ESP32 code on Arduino IDE
+1. Open the .ino file provided in the repo
+2. Make sure connect the correct COM port and Dev module for ESP 
+3. Enable PSRAM and set storage to HUGE <br />
+![Screenshot 2022-12-06 140623](https://user-images.githubusercontent.com/105019328/206023121-50a0df8c-837b-44f7-a771-cadee9c211df.jpg)
+
+4. Change the SSID and Password in the code <br />
+![Screenshot 2022-12-06 140602](https://user-images.githubusercontent.com/105019328/206022962-3b4ec1d2-a76a-4612-83a4-60ca1d272604.jpg)
+
+5. Update server details
+
+6. Compile and upload the code
+
+
+
+## Running the flask app on EC2 instance 
+1. Launch an EC2 instance on the AWS console and choose an appropriate Amazon Machine Image (AMI) for your instance.
+2. During the launch wizard, make sure to configure the security group to allow incoming traffic on the port that your Flask app is listening on (default is 5000).
+3. Once the instance is running, copy your Flask app files to the instance using any file transfer method such as SCP or SFTP (I prefer Git pulls)
+4. Install the requirements 
+5. Run the flask app 
+```
+python app.py
+```
 
 ## Credits
-PestDetective was created by Manan Luthra. 
+PestDetective was developed by Manan Luthra. 
 
 ## References:
 
 - YOLOv3 model: [link to source]
+- The AI Guy
 - TensorFlow/Keras: [link to source]
-- ESP32 firmware: [link to source]
+- Tensorflow Light Model Maker
+- Google Open Images Dataset
+- Roblox
+
 
