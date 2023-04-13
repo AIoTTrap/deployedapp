@@ -254,8 +254,7 @@ def uploadimage32():
         #img.save(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_image.jpg'))
         #img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_image.jpg'))
         # image_path=os.path.join(UPLOAD_FOLDER, 'esp_image.png')
-
-        return render_template('esppostimage.html', filename=image_name)
+    return render_template('esppostimage.html', filename=image_name)
     
 
 @app.route('/display_esp/<filename>')
