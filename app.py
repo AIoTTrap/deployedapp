@@ -255,13 +255,13 @@ def uploadimage32():
         _, img_encoded = cv2.imencode('.png', img)
         response = img_encoded.tobytes()
         img=Image.open(io.BytesIO(response))
-        #img_name-img.filename
+        img_name-img.filename
         #response = img_encoded.tostring()
-        img.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+        img.save(os.path.join(app.config['UPLOAD_FOLDER'], img_name))
         #img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
         # image_path=os.path.join(UPLOAD_FOLDER, 'esp_image.png')
 
-    return render_template('esppostimage.html', filename=image_name)
+    return render_template('esppostimage.html', filename=img_name)
     
 
 @app.route('/display_esp/<filename>')
