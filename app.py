@@ -217,7 +217,16 @@ def get_detections():
 #     return render_template('esppostimage.html')
 
 @app.route('/esp32post', methods=['GET','POST'])
-def uploadimage32():            
+def uploadimage32():         
+    for item_name in os.listdir(UPLOAD_FOLDER):  # Iterate over all the items in the directory
+        item_path = os.path.join(UPLOAD_FOLDER, item_name)  # Get the full path of the item
+
+        if os.path.isfile(item_path):  # Check if the item is a file
+            os.remove(item_path)  # Delete the file
+
+        elif os.path.isdir(item_path):  # Check if the item is a folder
+            shutil.rmtree(item_path)  # Delete the folder
+            
     image=request.files.get("file", None)
     if image:
         image_name=secure_filename(image.filename)
@@ -249,14 +258,11 @@ def uploadimage32():
         #img_name-img.filename
         #response = img_encoded.tostring()
         img.save(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
-        img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+        #img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
         # image_path=os.path.join(UPLOAD_FOLDER, 'esp_image.png')
 
     return render_template('esppostimage.html', filename=image_name)
-        # try:
-        #     return Response(response=response, status=200, mimetype='image/png')
-        # except FileNotFoundError:
-        #     abort(404)
+    
 
 @app.route('/display_esp/<filename>')
 def display_esp(filename):
