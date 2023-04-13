@@ -212,9 +212,9 @@ def get_detections():
 
          
 
-@app.route('/esp32post')
-def home_new():
-    return render_template('esppostimage.html')
+#@app.route('/esp32post')
+#def home_new():
+#    return render_template('esppostimage.html')
 
 @app.route('/esp32post', methods=['GET','POST'])
 def uploadimage32():                 
@@ -243,15 +243,15 @@ def uploadimage32():
         # print('output saved to: {}'.format(output_path + 'detection.jpg'))
         
         # prepare image for response
-        _, img_encoded = cv2.imencode('.png', img)
+        _, img_encoded = cv2.imencode('.jpg', img)
         response = img_encoded.tobytes()
         img=Image.open(io.BytesIO(response))
         #response = img_encoded.tostring()
-        img.save(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_img.png'))
-        img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_img.png'))
+        img.save(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_image.jpg'))
+        img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_image.jpg'))
         # image_path=os.path.join(UPLOAD_FOLDER, 'esp_image.png')
 
-    return render_template('esppostimage.html', filename='esp_img.png')
+    return render_template('esppostimage.html', filename='esp_image.jpg')
     
 
 @app.route('/display_esp/<filename>')
