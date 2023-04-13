@@ -257,7 +257,7 @@ def uploadimage32():
         img=Image.open(io.BytesIO(response))
         #response = img_encoded.tostring()
         img.save(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_img.png'))
-        #img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+        img=load_img(os.path.join(app.config['UPLOAD_FOLDER'], 'esp_img.png'))
         # image_path=os.path.join(UPLOAD_FOLDER, 'esp_image.png')
 
     return render_template('esppostimage.html', filename='esp_img.png')
