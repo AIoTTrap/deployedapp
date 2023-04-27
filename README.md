@@ -75,11 +75,11 @@ PestDetective was developed by Manan Luthra.
 
 ## References:
 
-- YOLOv3 model: [link to source]
-- The AI Guy
-- TensorFlow/Keras: [link to source]
-- Tensorflow Light Model Maker
-- Google Open Images Dataset
-- Roblox
+- <a href="https://pjreddie.com/darknet/yolo/">YOLOv3 model</a> 
+- <a href="https://github.com/theAIGuysCode/Object-Detection-API">The AI Guy</a>
+- <a href="https://www.tensorflow.org/lite/models/modify/model_maker/image_classification">TensorFlow/Keras</a>
+- <a href="https://www.tensorflow.org/lite/models/modify/model_maker/object_detection">Tensorflow Light Model Maker</a>
+- <a href="https://storage.googleapis.com/openimages/web/index.html">Google Open Images Dataset</a>
+- <a href="https://roboflow.com/convert/oidv4-txt-to-pascal-voc-xml">Roboflow</a>
 
 
