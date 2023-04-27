@@ -1,1 +1,11 @@
+Find YOLO pretrained weights here:
+<a href="https://storage.googleapis.com/openimages/web/index.html">Google Image Dataset V7</a> <br>
 
+The weights have been trained for these 5 classes:
+Beetles <br>
+  Caterpillars <br>
+  Snails <br>
+  Ants <br>
+  Insects <br>
+  
+ (Based on images taken from the <a href="https://storage.googleapis.com/openimages/web/index.html">Google Image Dataset V7</a>)
